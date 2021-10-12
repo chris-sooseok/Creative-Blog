@@ -7,9 +7,9 @@ from config.settings import DISPLAY_APPS
 def apps(request):
     if request.user.is_authenticated:
         user = request.user
-        app = Setting.objects.get(user=user)
-        if app.app_display_dict != None:
-            return {'app_display_dict':json.loads(app.app_display_dict), 'display_apps': DISPLAY_APPS}
+        setting = Setting.objects.get(user=user)
+        if setting.app_display_dict != None:
+            return {'APP_DISPLAY_DICT':json.loads(setting.app_display_dict), 'DISPLAY_APPS': DISPLAY_APPS}
         else:
             return {'emtpy':"empty"}
     else:  

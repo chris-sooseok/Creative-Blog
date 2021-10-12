@@ -45,18 +45,22 @@ class Setting(models.Model):
         return str(self.user)
 
     def save(self, *args, **kwargs):
+
+        # initialized app_display_dict value
         if not self.app_display_dict:
             self.app_display_dict = json.dumps({APP:True for APP in DISPLAY_APPS})
         else:
             app_display_dict = json.loads(self.app_display_dict)
             keys = list(app_display_dict)
+
+            # case if deleted app is added back
             if len(keys) < len(DISPLAY_APPS):
                 for app in DISPLAY_APPS:
                     if app not in keys:
                         app_display_dict.update({app:True})
-                # ['notes','todos'] != ["main","notes", "todos", "books"]
-                # need to keep the state of false or ture of each app
                 self.app_display_dict = json.dumps(app_display_dict)
+
+            # case if existing app is deleted
             elif len(keys) > len(DISPLAY_APPS):
                 for key in keys:
                     if key not in DISPLAY_APPS:
@@ -67,10 +71,6 @@ class Setting(models.Model):
         super(Setting, self).save(*args, **kwargs)      
 
         
-        
-# user create -> setting create -> user and app_display_dict set -> now user can update setting 
-# when DISPLAY_APPS updated -> gotta run migrate 
-
 BOOL_CHOICES= ((True, "Yes"), (False, "No"))
 
 for APP in DISPLAY_APPS:

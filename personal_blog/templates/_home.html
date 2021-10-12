@@ -31,7 +31,7 @@
             <!-- Sidebar-->
             <div class="border-end " id="sidebar-wrapper">
                 {% block nav-brand %}
-                    <div class="sidebar-heading border-bottom">Creative Blog : <span style="color:orange; text-decoration: underline;"> Beta Version</span></div>
+                    <div class="sidebar-heading border-bottom">Creative Blog</div>
                 {% endblock nav-brand %}
 
                 {% block sidebar %}
@@ -43,63 +43,58 @@
                         {% else %}
                         <img src="{% static 'images/default-user.png' %}" alt="John" style="width:128px; height:128px; border-radius: 50%;">
                         {% endif %}
-                        <h5 style="color:white;">{{ user.username }}</h1>
-                        <p style="color:white;">Hello, {{ user.email }}</p>
+                        <h5 style="color:black;">{{ user.username }}</h1>
+                        <p style="color:black;">Hello, {{ user.email }}</p>
                         <p><a href="{% url 'account_logout' %}">Log Out</a></p>
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'update_setting' %}">Settings</a>
                     {% else %}
                         <img src="{% static 'images/default-user.png' %}" alt="John" style="width:128px; height:128px; border-radius: 50%;">
-                        <p style="color:white;"> Hello,  visitor </p>
+                        <p style="color:black;"> Hello,  visitor </p>
                         <p><a href="{% url 'account_login' %}">Sign in</a></p>
                     {% endif %}
                     <!--
                     <p><button>Contact</button></p>
                     -->
                 </div>
-               
-                <div class="logos">
-                    <a class="fa fa-linkedin"href=""></a>
-                    <a class="fa fa-facebook"href=""></a>
-                    <a class="fa fa-instagram"href=""></a>
-                </div>
-
+        
                 {% endblock sidebar %}
             </div>
 
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                     <div class="container-fluid">
                         <button class="btn btn-outline-dark" id="sidebarToggle"><i class="fa fa-bars"></i></button>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                         
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0" style="padding-right: 30px;">
                                 {% block nav-item %}
 
                                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Main</a></li>
                            
-                                {% for app in display_apps %}
-                                    {% if app_display_dict|lookup:app == True %}
+                                {% for app in DISPLAY_APPS %}
+                                    {% if APP_DISPLAY_DICT|lookup:app == True %}
                                         <li class="nav-item"><a class="nav-link" href="{% url app %}">{{app|title}}</a></li>
                                     {% endif %}
                                 {% endfor %}
                                 
                                 {% endblock nav-item %}
-
+                                <!--
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         <a href="#">Empty</a>
-                                        <!--
+                                        
                                         <a class="dropdown-item" href="#!">Action</a>
                                         <a class="dropdown-item" href="#!">Another action</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#!">Something else here</a>
-                                        -->
+                                        
                                     </div>
                                 </li>
+                                -->
                             </ul>
                         </div>
                     </div>

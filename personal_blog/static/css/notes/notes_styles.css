@@ -17,7 +17,6 @@ body{
 
 .content .content-header{
     padding-bottom: 10px;
-    border-bottom: 1px solid orange;
 }
 
  /* Note detail style*/
@@ -40,7 +39,7 @@ body{
 
 .content-body .list-group .list-group-item{
     background-color:white;
-    border-color: orange;
+    border-color: black;
     color: black;
 }
 
@@ -52,7 +51,7 @@ body{
 }
 
 .list-group .list-group-item .content-body-title a:hover {
-    color: orange;
+    color: grey;
 }
 
 .list-group .list-group-item .content-body-action a{ 

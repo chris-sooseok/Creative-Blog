@@ -45,9 +45,9 @@
                     <h5>{{ note.summary }}</h5>
                     </div>
                     <div class="nav flex-column content-header-action">
-                        <a href="{% url 'update_note' topic_pk=topic.pk note_pk=note.uuid %}" class="btn btn-success"> Update</a>
-                        <a href="{% url 'delete_note' topic_pk=topic.pk note_pk=note.pk %}" class="btn btn-success"> Delete </a>
-                        <a href="{% url 'create_note' topic.pk %}" class="btn btn-success"> Create </a>
+                        <a href="{% url 'update_note' topic_pk=topic.pk note_pk=note.uuid %}" class="btn btn-outline-dark"> Update</a>
+                        <a href="{% url 'delete_note' topic_pk=topic.pk note_pk=note.pk %}" class="btn btn-outline-dark"> Delete </a>
+                        <a href="{% url 'create_note' topic.pk %}" class="btn btn-outline-dark"> Create </a>
                     </div>
                 </div>
                 <div class="col-md-12 content-body">
@@ -58,7 +58,7 @@
         </div>
         <div class="col-md-3">
             
-            <h1> graph </h1>
+
             
         </div>
  

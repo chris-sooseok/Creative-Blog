@@ -1,4 +1,4 @@
-{% extends "2_notes/topic_list.html" %}
+{% extends "2_notes/category_list.html" %}
 {% load crispy_forms_tags %}
 
 {% block item %}
@@ -6,13 +6,13 @@
     <div class="col-md-9">
         <div class="col-md-12 content">
             <div class="d-flex justify-content-between content-header">
-              <h1>Delete {{topic.topic}}</h1>
+              <h1>Delete {{category.category}}</h1>
             </div>
             <div class="content-body">
-              <form action="{% url 'delete_topic' topic.pk %}" method="POST">
+              <form action="{% url 'delete_category' category.pk %}" method="POST">
                   {% csrf_token %}
                   <strong>Are you sure you want to delete it?</strong>
-                  <p>To delete it, type the topic title in the blank.</p>
+                  <p>To delete it, type the category title in the blank.</p>
                   {% if message %}
                       {{ message }}
                   {% endif %}
@@ -27,6 +27,7 @@
 
       <div class="col-md-3">
 
+     
 
       </div>
 </div>

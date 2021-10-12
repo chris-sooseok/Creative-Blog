@@ -1,4 +1,4 @@
-{% extends "2_notes/topic_list.html" %}
+{% extends "2_notes/category_list.html" %}
 {% load crispy_forms_tags %}
 
 {% block item %}
@@ -7,7 +7,7 @@
   <div class="col-md-9">
       <div class="col-md-12 content">
         <div class="d-flex justify-content-between content-header">
-          <h1>Update {{topic.topic}}</h1>
+          <h1>Update {{category.category}}</h1>
         </div>
         <div class="content-body">
             <form method="POST">
@@ -20,6 +20,7 @@
   </div>
 
   <div class="col-md-3">
+ 
   </div>
 </div>
 

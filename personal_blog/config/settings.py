@@ -27,10 +27,12 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=["*"])
 # change
 # Application definition
 # use this text to make commit
+# edit
+# zzzzzzzzzz
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,7 +58,7 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
-APPS = ["main","todos", "notes", "people", "books"]
+APPS = ["main","todos", "notes", "people", "books", "trackofminds"]
 INSTALLED_APPS = INSTALLED_APPS + APPS
 DISPLAY_APPS = ["todos", "notes"]
 
@@ -151,6 +153,16 @@ DATABASES = {
     default="postgres://postgres@db/postgres") 
 }
 
+#DATABASES = {
+#    "default": {
+#        "ENGINE": env("DATBASE_ENGINE", default="django.db.backends.sqlite3"),
+#        "NAME": env("DATABASE_NAME", default="db.sqlite3"),
+#        "USER": env("DATABASE_USER", default="user"),
+#        "PASSWORD": env("DATABASE_PASSWORD", default="password"),
+#        "HOST": env("DATABASE_HOST", default="localhost"),
+#        "PORT": env("DATABASE_PORT", default="5432"),
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

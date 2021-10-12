@@ -1,0 +1,58 @@
+{% extends "_home.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+  <title>Creative Blog : Notes</title>
+{% endblock title %}
+
+{% block static %}
+  <link rel="stylesheet" href="{% static 'css/notes/notes_styles.css' %}"/>
+{% endblock static %}
+
+{% block nav-brand %}
+  <div class="sidebar-heading border-bottom">Notes : {{category.category}}</div>
+{% endblock nav-brand %}
+
+{% block sidebar %}
+<div class="list-group">
+</div>
+{% endblock sidebar %}
+
+{% block item %}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="col-md-12 content">
+            <div class="d-flex justify-content-between content-header">
+                <h1>{{category.category}} Topic List</h1>
+                <div class="nav flex-column content-header-action">
+                  <a href="{% url 'create_topic' category.id %}" class="btn btn-outline-dark">Create new topic</a>
+                </div>
+            </div>
+            <div class="content-body">
+            {% if category.topics.exists %}
+                <div class="list-group">     
+                    {% for topic in category.topics.all %}
+                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h2 class="mb-1 content-body-title "><a href="{% url 'topic_detail' topic.pk %}">{{topic.topic}}</a></h2>
+                                <div class="nav flex-column content-body-action">
+                                    <a href="{% url 'delete_topic' topic.pk %}" class="btn btn-outline-dark">Delete</a>
+                                    <a href="{% url 'update_topic' topic.pk %}"  class="btn btn-outline-dark">Update</a>
+                                </div>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+  <div class="col-md-3">        
+
+  </div>
+</div>
+
+{% endblock item %}

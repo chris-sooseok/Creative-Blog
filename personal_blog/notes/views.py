@@ -1,16 +1,65 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import UpdateView
-from .models import Topic, Note
-from .forms import NoteForm, TopicCreateForm
+from .models import Topic, Note, Category
+from .forms import NoteForm, TopicCreateForm, CategoryCreateForm
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bs4 import BeautifulSoup
-import lxml
 import os
+import pathlib
+parent_dir = os.path.basename(pathlib.Path(__file__).parent.resolve())
 # Create your views here.
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    context_object_name = 'category_list'
+    template_name = '2_notes/category_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        category_list = Category.objects.filter(user=self.request.user).all()
+        context.update({'category_list':category_list})
+        return context
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    template_name = "2_notes/category_create.html"
+    form_class = CategoryCreateForm
+    login_url = 'account_login'
+    success_url = reverse_lazy(parent_dir)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Category
+    fields = ['category',]
+    login_url = 'account_login'
+    template_name = "2_notes/category_update.html"
+    success_url = reverse_lazy(parent_dir)
+
+@login_required
+def CategoryDeleteFunction(request, pk):
+    category = Category.objects.get(user=request.user, id=pk)
+    if request.method == "GET":
+        return render(request, "2_notes/category_delete.html", {"category":category})
+    else:
+        if request.user.is_authenticated:
+            title = request.POST['title']
+            if title == category.category:
+                Category.objects.filter(user=request.user,id=pk).delete()
+                return redirect(parent_dir)
+            else:
+                return render(request, "2_notes/category_delete.html", {"category": category, "message": "The title didn't match"})
+        else:
+            return redirect("account_login")
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    model = Category
+    context_object_name = 'category'
+    template_name = '2_notes/category_detail.html'
 
 class TopicListView(LoginRequiredMixin, ListView):
     model = Topic
@@ -34,11 +83,15 @@ class TopicCreateView(LoginRequiredMixin,CreateView):
     template_name = "2_notes/topic_create.html"
     form_class = TopicCreateForm
     login_url = 'account_login'
-    success_url = reverse_lazy('notes')
+    success_url = reverse_lazy(parent_dir)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.category = Category.objects.get(id=self.kwargs['pk'])
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('category_detail', kwargs={'pk':self.kwargs['pk']})
 
 @login_required
 def TopicDeleteFunction(request, pk):
@@ -50,7 +103,7 @@ def TopicDeleteFunction(request, pk):
             title = request.POST['title']
             if title == topic.topic:
                 Topic.objects.filter(user=request.user,id=pk).delete()
-                return redirect("notes")
+                return redirect("category_detail",pk=topic.category.id)
             else:
                 return render(request, "2_notes/topic_delete.html", {"topic": topic, "message": "The title didn't match"})
         else:
@@ -61,7 +114,11 @@ class TopicUpdateView(LoginRequiredMixin,UpdateView):
     fields = ['topic',]
     login_url = 'account_login'
     template_name = "2_notes/topic_update.html"
-    success_url = reverse_lazy('notes')
+    success_url = reverse_lazy("category_detail")
+
+    def get_success_url(self, **kwargs):
+        topic = Topic.objects.get(id=self.kwargs['pk'])
+        return reverse_lazy('category_detail', kwargs={'pk':topic.category.id})
 
 @login_required
 def NoteDetailFunction(request,topic_pk,note_pk):
