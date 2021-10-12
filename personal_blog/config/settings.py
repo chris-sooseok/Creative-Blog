@@ -52,23 +52,47 @@ INSTALLED_APPS = [
     'requests',
     'allauth',
     'allauth.account',
-    'bs4',
-    'lxml',
     'storages',
     'accounts',
+  
 ]
 
 APPS = ["main","todos", "notes", "people", "books", "trackofminds"]
 INSTALLED_APPS = INSTALLED_APPS + APPS
 DISPLAY_APPS = ["todos", "notes"]
 
+SOCIAL_LOGIN = ['allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.linkedin',]
+
+if DEBUG == False:
+    INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
+
+
 SITE_ID = 1
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 # ---- ALLAUTH SETTING ----
 AUTH_USER_MODEL ='accounts.CustomUser'
@@ -77,13 +101,6 @@ LOGIN_REDIRECT_URL = 'home'
 #LOGOUT_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
-ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
 # ---- ALLAUTH SETTING END ----
 
 
@@ -101,9 +118,6 @@ SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
 CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # ---- DEPLOYMENT CHECKLIST END -----
-
-
-
 
 MIDDLEWARE = [
     #'django.middleware.cache.UpdateCacheMiddleware',

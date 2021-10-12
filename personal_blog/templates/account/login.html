@@ -1,5 +1,7 @@
 {% load crispy_forms_tags %}
-
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,11 +34,7 @@ body {
 	margin: 0 0 15px;
 	text-align: center;
 }
-.signup-form .lead {
-	font-size: 14px;
-	margin-bottom: 30px;
-	text-align: center;
-}
+
 .signup-form form {		
 	border-radius: 1px;
 	margin-bottom: 15px;
@@ -45,6 +43,7 @@ body {
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	padding: 30px;
 }
+
 .signup-form .form-group {
 	margin-bottom: 20px;
 }
@@ -52,18 +51,13 @@ body {
 	font-weight: normal;
 	font-size: 13px;
 }
+
 .signup-form .form-control {
 	min-height: 38px;
 	box-shadow: none !important;
 	border-width: 0 0 1px 0;
 }	
-.signup-form .input-group-addon {
-	max-width: 42px;
-	text-align: center;
-	background: none;
-	border-bottom: 1px solid #e1e1e1;
-	padding-left: 5px;
-}
+
 .signup-form .btn, .signup-form .btn:active {        
 	font-size: 16px;
 	font-weight: bold;
@@ -75,28 +69,50 @@ body {
 .signup-form .btn:hover, .signup-form .btn:focus {
 	background: #179b81 !important;
 }
-.signup-form a {
-	color: #19aa8d;
+
+ul {
+	padding-left: 80px;
+	margin-bottom: 0px;
+}
+ul li{
+	list-style: none;
+	display: inline-block;
+	padding: 0 2px;
+}
+ul li a:hover{
 	text-decoration: none;
-}	
-.signup-form a:hover {
-	text-decoration: underline;
+	opacity: 0.5;
+	color: white;
 }
-.signup-form .fa {
-	font-size: 21px;
-	position: relative;
-	top: 8px;
+
+.fa {
+	padding: 10px 0px;
+  	font-size: 30px;
+  	width: 50px;
+	text-align: center;
+	justify-content: center;
+	text-decoration: none;
+	color: white;
 }
-.signup-form .fa-paper-plane {
-	font-size: 17px;
+
+.fa-google{
+	justify-content: center;
+	background: rgb(252, 20, 20);
 }
-.signup-form .fa-check {
-	color: #fff;
-	left: 9px;
-	top: 18px;
-	font-size: 7px;
-	position: absolute;
+
+.fa-linkedin{
+	background: darkcyan;
 }
+
+.fa-github{
+	background: dimgrey;
+}
+
+.naver-img{
+	margin-top: -5.5px;
+}
+
+
 </style>
 </head>
 <body>
@@ -111,7 +127,14 @@ body {
             <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
         </div>
     </form>
+	<ul>
+		<li><a class="fa fa-google" href="{% provider_login_url 'google' %}"></a></li>
+		<li><a class="fa fa-naver" href="{% provider_login_url 'naver' %}"><img class="naver-img" src="{% static 'naverlogo.png' %}" alt="naverlogo" height="50px" width="50px"></a></li>
+		<li><a class="fa fa-linkedin" href="{% provider_login_url 'linkedin' %}"></a></li>
+		<li><a class="fa fa-github" href="{% provider_login_url 'github' %}"></a></li>
+	</ul>
 	<div class="text-center">Not have an account? <a href="{% url 'account_signup' %}">Sign Up here</a></div>
+	<div class="text-center">Forgot password? <a href="{% url 'account_reset_password' %}">Reset password here</a></div>
 </div>
 </body>
 </html>
