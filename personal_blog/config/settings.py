@@ -67,6 +67,18 @@ SOCIAL_LOGIN = ['allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.linkedin_oauth2',]
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
+
 if DEBUG == False:
     INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -9,7 +9,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         {% block title %}
-            <title>Creative Blog : Main</title>
+            <title>Creative Blog Project</title>
         {% endblock title %}
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}"/>
@@ -31,7 +31,7 @@
             <!-- Sidebar-->
             <div class="border-end " id="sidebar-wrapper">
                 {% block nav-brand %}
-                    <div class="sidebar-heading border-bottom">Creative Blog</div>
+                    <div class="sidebar-heading border-bottom">Creative Blog Project</div>
                 {% endblock nav-brand %}
 
                 {% block sidebar %}
@@ -72,6 +72,7 @@
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0" style="padding-right: 30px;">
                                 {% block nav-item %}
 
+                                {% if user.is_authenticated %}
                                 <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Main</a></li>
                            
                                 {% for app in DISPLAY_APPS %}
@@ -79,6 +80,8 @@
                                         <li class="nav-item"><a class="nav-link" href="{% url app %}">{{app|title}}</a></li>
                                     {% endif %}
                                 {% endfor %}
+
+                                {% endif %}
                                 
                                 {% endblock nav-item %}
                                 <!--
