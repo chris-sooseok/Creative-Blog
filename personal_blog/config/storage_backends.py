@@ -1,8 +1,7 @@
 from storages.backends.s3boto3 import S3Boto3Storage
-from config import settings
 
 class StaticStorage(S3Boto3Storage):
-    location = settings.AWS_LOCATION
+    location = 'ap-northeast-2'
     default_acl = 'public-read'
 
 

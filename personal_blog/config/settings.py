@@ -65,12 +65,18 @@ SOCIAL_LOGIN = ['allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.linkedin',]
+    'allauth.socialaccount.providers.linkedin_oauth2',]
 
 if DEBUG == False:
     INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
-
-
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+    EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+    EMAIL_PORT = env.int('EMAIL_PORT')
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = (
@@ -78,21 +84,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
-EMAIL_HOST_USER=env('EMAIL_HOST_USER')
-EMAIL_PORT = env.int('EMAIL_PORT')
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
 
 # ---- ALLAUTH SETTING ----
 AUTH_USER_MODEL ='accounts.CustomUser'
@@ -231,12 +229,21 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_QUERYSTRING_AUTH = False
 
 # static
-AWS_LOCATION = 'static'
-STATIC_URL = f'https://{AWS_S3_DOMAIN}/{AWS_LOCATION}/'
-#STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles')) # new
-STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
-STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))] 
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+if DEBUG == False:
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_DOMAIN}/{AWS_LOCATION}/'
+    #STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles')) # new
+    STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
+    STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))] 
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+else:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+    STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+    STATICFILES_FINDERS = [
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    ]
 #STATIC_ROOT = f'https://{AWS_S3_DOMAIN}/{AWS_LOCATION}/'
 
 # media 
