@@ -26,8 +26,9 @@
               <div class="content-body">
                 <form action="{% url 'delete_note' topic_pk=topic.pk note_pk=note.pk %}" method="POST">
                     {% csrf_token %}
-                    <Strong> Are you sure you want to delete {{note.title}}</Strong>
-                    <p>To delete it, type the note title in the blank</p>
+                    <Strong> Are you sure you want to delete it?</Strong>
+                    <br><br>
+                    <p>To delete, type the note title <span style="color:red;">{{note.title}}</span> in the blank</p>
                     {% if message %}
                         {{message}}
                     {% endif %}

@@ -12,13 +12,14 @@
               <form action="{% url 'delete_category' category.pk %}" method="POST">
                   {% csrf_token %}
                   <strong>Are you sure you want to delete it?</strong>
-                  <p>To delete it, type the category title in the blank.</p>
+                  <br><br>
+                  <p>To delete, type the category title <span style="color:red;">{{category.category}}</span> in the blank.</p>
                   {% if message %}
                       {{ message }}
                   {% endif %}
                   <input class="form-control" type="text" name="title">
                   <br>
-                  <button class="btn btn-outline-dark">Delete</button>
+                  <button style="float:right;"class="btn btn-outline-dark">Delete</button>
               </form>
             </div>
         </div>

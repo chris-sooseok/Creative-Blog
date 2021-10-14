@@ -43,7 +43,7 @@ class Note(models.Model):
     summary = models.CharField(max_length=200, blank=True)
     date = models.DateField(auto_now=True)
     # content media file path is set in setting to uploads
-    content = RichTextUploadingField(blank=True, null=True)
+    content = RichTextUploadingField(blank=True, null=True, config_name="notes")
 
     def __str__(self):
         return str(self.order) + '. ' + str(self.title)

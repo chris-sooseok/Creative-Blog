@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import socket
 from environs import Env
-
+import os
 # environs[django] also installs 
 env = Env()
 env.read_env()
@@ -67,28 +67,27 @@ SOCIAL_LOGIN = ['allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.kakao',]
 
-if DEBUG == False:
-    INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_USE_TLS = True
-    EMAIL_HOST = env('EMAIL_HOST')
-    EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
-    EMAIL_HOST_USER=env('EMAIL_HOST_USER')
-    EMAIL_PORT = env.int('EMAIL_PORT')
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
-    SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'offline',
-        }
+INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = env('EMAIL_HOST', default=os.environ.get('EMAIL_HOST'))
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD', default=os.environ.get('EMAIL_HOST_PASSWORD'))
+EMAIL_HOST_USER=env('EMAIL_HOST_USER', default=os.environ.get('EMAIL_HOST_USER'))
+EMAIL_PORT = env.int('EMAIL_PORT', default=os.environ.get('EMAIL_PORT'))
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+SOCIALACCOUNT_PROVIDERS = {
+'google': {
+    'SCOPE': [
+        'profile',
+        'email',
+    ],
+    'AUTH_PARAMS': {
+        'access_type': 'offline',
     }
-    }
+}
+}
     
 SITE_ID = 1
 
@@ -293,18 +292,25 @@ DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
+    'notes': {
+        'toolbar': 'NoteCustom',
+        'skin': 'moono',
         'height':  700,
         'width': 'auto',
-        'toolbar_Custom': [
-            ['Link', 'Image', 'CodeSnippet'],
+        'toolbar_NoteCustom': [
+            ['Link', 'Image', 'CodeSnippet','ExportPdf','PasteFromWord',],
             ['ShowBlocks','Templates','JustifyLeft', 'JustifyCenter', 'JustifyRight'],
             ['NumberedList', 'BulletedList'],
             [ 'Table', 'HorizontalRule'],
-            ['Styles', 'Format', 'Font', 'FontSize','TextColor', 'BGColor','Bold', 'Italic', 'Underline' ],
+            ['Undo','Redo'],
+            ['Styles', 'Format', 'Font', 'FontSize','Outdent','Indent','TextColor', 'BGColor','Bold', 'Italic', 'Underline','CopyFormatting' ],
         ],
-        'extraPlugins': 'codesnippet'
+        'codeSnippet_theme':'railscasts',
+        'autosave': {
+            'autoload': True,
+        },
+        'extraPlugins': ['codesnippet','autosave',
+        'exportpdf'],
     },
     "book": {
         'toolbar': 'BookCustom',

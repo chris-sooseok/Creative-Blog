@@ -5,6 +5,10 @@
 {% block static %}
 <link rel="stylesheet" href="{% static 'css/notes/notes_styles.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/notes/note_margin.css' %}"/>
+<link rel="stylesheet" 
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 {% endblock static %}
 
 {% block nav-brand %}

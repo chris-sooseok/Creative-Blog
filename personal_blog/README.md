@@ -24,5 +24,10 @@ Plan
 # 각자 편리한 노트를 작성할 수 있고 공유할 수 있음
 # 
 
-공부하는것들
-경제, 정치, 철학의 관한것들
+
+post system upgrade
+- pdf post, coding post, excel, word posting, google doc
+
+permission to fully sign up
+
+post share feed
