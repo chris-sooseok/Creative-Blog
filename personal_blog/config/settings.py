@@ -15,8 +15,6 @@ import os
 env = Env()
 env.read_env()
 
-# to commit
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,11 +28,6 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=["*"])
-# change
-# Application definition
-# use this text to make commit
-# edit
-# zzzzzzzzzz ddd
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,19 +49,19 @@ INSTALLED_APPS = [
     'allauth.account',
     'storages',
     'accounts',
-  
 ]
 
 APPS = ["main","todos", "notes", "people", "books", "trackofminds"]
 INSTALLED_APPS = INSTALLED_APPS + APPS
 DISPLAY_APPS = ["todos", "notes"]
 
-SOCIAL_LOGIN = ['allauth.socialaccount',
+SOCIAL_LOGIN = [
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.kakao',]
-
+    'allauth.socialaccount.providers.kakao',
+]
 
 INSTALLED_APPS = INSTALLED_APPS + SOCIAL_LOGIN
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -311,7 +304,7 @@ CKEDITOR_CONFIGS = {
         'autosave': {
             'autoload': True,
         },
-        'extraPlugins': ['codesnippet','autosave'],
+        'extraPlugins': ['codesnippet'],
     },
     "book": {
         'toolbar': 'BookCustom',
