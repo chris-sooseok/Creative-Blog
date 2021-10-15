@@ -300,7 +300,7 @@ CKEDITOR_CONFIGS = {
         'height':  700,
         'width': 'auto',
         'toolbar_NoteCustom': [
-            ['Link', 'Image', 'CodeSnippet','ExportPdf','PasteFromWord',],
+            ['Link', 'Image', 'CodeSnippet',],
             ['ShowBlocks','Templates','JustifyLeft', 'JustifyCenter', 'JustifyRight'],
             ['NumberedList', 'BulletedList'],
             [ 'Table', 'HorizontalRule'],
@@ -311,8 +311,7 @@ CKEDITOR_CONFIGS = {
         'autosave': {
             'autoload': True,
         },
-        'extraPlugins': ['codesnippet','autosave',
-        'exportpdf'],
+        'extraPlugins': ['codesnippet','autosave'],
     },
     "book": {
         'toolbar': 'BookCustom',
