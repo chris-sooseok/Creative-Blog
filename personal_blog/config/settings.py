@@ -304,7 +304,7 @@ CKEDITOR_CONFIGS = {
         'autosave': {
             'autoload': True,
         },
-        'extraPlugins': ['codesnippet'],
+        'extraPlugins': ['codesnippet','autosave'],
     },
     "book": {
         'toolbar': 'BookCustom',
