@@ -34,7 +34,7 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=["*"])
 # Application definition
 # use this text to make commit
 # edit
-# zzzzzzzzzz
+# zzzzzzzzzz ddd
 
 INSTALLED_APPS = [
     'django.contrib.admin',
