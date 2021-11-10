@@ -290,7 +290,7 @@ CKEDITOR_CONFIGS = {
     'notes': {
         'toolbar': 'NoteCustom',
         'skin': 'moono',
-        'height':  700,
+        'height':  650,
         'width': 'auto',
         'toolbar_NoteCustom': [
             ['Link', 'Image', 'CodeSnippet',],
@@ -321,8 +321,6 @@ CKEDITOR_CONFIGS = {
 }
 
 # ---- CKEDITOR SETTING END -----
-
-
 
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 604800
