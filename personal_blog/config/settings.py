@@ -49,11 +49,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'storages',
     'accounts',
-]
 
-APPS = ["main","todos", "notes", "people", "books", "trackofminds"]
-INSTALLED_APPS = INSTALLED_APPS + APPS
-DISPLAY_APPS = ["todos", "notes"]
+    #apps
+    'main',
+    'notes'
+]
 
 SOCIAL_LOGIN = [
     'allauth.socialaccount',
@@ -151,12 +151,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'todos.custom_context_processor.current_date_renderer',
-                'main.custom_context_processor.apps',
             ],
-            'libraries':{
-                'custom_filter': 'main.custom_filter',
-            }
         },
     },
 ]
